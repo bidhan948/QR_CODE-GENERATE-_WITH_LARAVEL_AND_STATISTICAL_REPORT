@@ -7,3 +7,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::view('/login','login');
+Route::POST('loginSubmit',[UsersTbController::class,'loginSubmit']);

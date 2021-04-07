@@ -34,19 +34,27 @@
                             </a>
                         </div>
                         <div class="login-form">
-                            <form action="{{url('Admin/loginSubmit')}}" method="POST">
+                            <form action="{{url('loginSubmit')}}" method="POST">
                                 @csrf
                                 <div class="form-group">
                                     <label>Email Address</label>
                                     <input class="au-input au-input--full" type="email" name="email" placeholder="Email">
+                                    @error('email')
+                                        <p class="text-danger p-1">{{$message}}</p>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
                                     <label>Password</label>
                                     <input class="au-input au-input--full" type="password" name="password" placeholder="Password">
+                                    @error('password')
+                                    <p class="text-danger p-1">{{$message}}</p>
+                                    @enderror
                                 </div>
                                 </div>
                                 <button class="au-btn au-btn--block au-btn--green m-b-20" type="submit">sign in</button>
-                            </form>
+                                @if (session()->has('msg'))
+                                    <p class="text-danger text-center p-1">{{session('msg')}}</p>
+                                @endif                            
                         </div>
                     </div>
                 </div>

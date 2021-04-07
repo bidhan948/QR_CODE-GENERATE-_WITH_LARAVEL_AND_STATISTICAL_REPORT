@@ -15,7 +15,7 @@ class CreateQrTrafficsTable extends Migration
     {
         Schema::create('qr_traffics', function (Blueprint $table) {
             $table->id();
-            $table->ineteger('qr_code_id');
+            $table->integer('qr_code_id');
             $table->string('device');
             $table->string('browser');
             $table->string('city')->nullable();

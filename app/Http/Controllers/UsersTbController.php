@@ -19,9 +19,9 @@ class UsersTbController extends Controller
             $r->session()->put('name',$user[0]->name);
             $r->session()->put('email',$user[0]->email);
             $r->session()->put('password',$user[0]->password);
-            $r->session()->put('role',$user[0]->role);           
-            if($user[0]->role == 1){
-                return Redirect('/');
+            $r->session()->put('role',$user[0]->role);        
+            if($user[0]->role == 1 ){
+                return redirect('/');
             }else{
                 return redirect('/Profile');
             }

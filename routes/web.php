@@ -18,6 +18,6 @@ Route::POST('loginSubmit',[UsersTbController::class,'loginSubmit']);
 Route::group(['middleware'=>['userAuth']],function(){
     Route::get('/', function () {
         return view('welcome');
-    });
-    Route::get('/Add-User',[UsersTbController::class,'addUser']);
+    })->middleware('adminAuth');
+    Route::get('/Add-User',[UsersTbController::class,'addUser'])->middleware('adminAuth');
 });

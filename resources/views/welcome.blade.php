@@ -9,9 +9,13 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
+                        @if (session()->has('msg'))
+                            <p class="text-center text-success alert-success p-1 mb-3">{{ session('msg') }}</p>
+                        @endif
                         <div class="overview-wrap">
                             <h2 class="title-1">overview</h2>
-                            <a class="au-btn au-btn-icon au-btn--blue text-white font-weight-bold" href="{{url('Add-User')}}">
+                            <a class="au-btn au-btn-icon au-btn--blue text-white font-weight-bold"
+                                href="{{ url('Add-User') }}">
                                 <i class="zmdi zmdi-plus font-weight-bold"></i>add User</a>
                         </div>
                     </div>
@@ -113,7 +117,8 @@
                                         <td class="text-right">$999.00</td>
                                         <td class="text-right">1</td>
                                         <td><a href="" class="btn btn-success">Edit <i class="fas fa-edit p-1"></i></a></td>
-                                        <td><a href="" class="btn btn-danger">Delete <i class="fas fa-trash-alt p-1"></i></a></td>
+                                        <td><a href="" class="btn btn-danger">Delete <i
+                                                    class="fas fa-trash-alt p-1"></i></a></td>
                                     </tr>
                                 </tbody>
                             </table>

@@ -14,7 +14,8 @@
                                     <h3 class="text-center title-2">Add User</h3>
                                 </div>
                                 <hr>
-                                <form action="" method="post" novalidate="novalidate">
+                                <form action="{{ url('addUserSubmit') }}" method="post" novalidate="novalidate" id="form">
+                                    @csrf
                                     <div class="form-group has-success">
                                         <label for="name" class="control-label mb-1">User Name</label>
                                         <input id="name" name="name" type="text" class="form-control cc-name valid"
@@ -23,11 +24,18 @@
                                             aria-describedby="cc-name-error">
                                         <span class="help-block field-validation-valid" data-valmsg-for="cc-name"
                                             data-valmsg-replace="true"></span>
+                                        @error('name')
+                                            <p class="text-danger p-1">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label for="Email" class="control-label mb-1">Email</label>
-                                        <input id="Email" name="Email" type="text" class="form-control"
-                                            aria-required="true" aria-invalid="false">
+                                        <label for="email" class="control-label mb-1">Email</label>
+                                        <input id="email" name="email" type="text" class="form-control" aria-required="true"
+                                            aria-invalid="false">
+                                        <div id="email_check"></div>
+                                        @error('email')
+                                            <p class="text-danger p-1">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                     <div class="form-group">
                                         <label for="password" class="control-label mb-1">Password</label>
@@ -37,15 +45,21 @@
                                             data-val-cc-number="Please enter a valid card number" autocomplete="cc-number">
                                         <span class="help-block" data-valmsg-for="cc-number"
                                             data-valmsg-replace="true"></span>
+                                        @error('password')
+                                            <p class="text-danger p-1">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="form-group">
                                                 <label for="total_qr" class="control-label mb-1">Total Qr</label>
                                                 <input id="total_qr" name="total_qr" type="text" class="form-control cc-exp"
-                                                 autocomplete="cc-exp">
+                                                    autocomplete="cc-exp">
                                                 <span class="help-block" data-valmsg-for="cc-exp"
                                                     data-valmsg-replace="true"></span>
+                                                @error('total_qr')
+                                                    <p class="text-danger p-1">{{ $message }}</p>
+                                                @enderror
                                             </div>
                                         </div>
                                     </div>

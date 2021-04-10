@@ -1,7 +1,8 @@
 <?php
 use App\Http\Controllers\QrCodrController;
 use App\Http\Controllers\UsersTbController;
-use App\Http\Controllers\QrTrafficController;
+use App\Http\Controllers\QrTrafficConptroller;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/logout',function(){
     session()->forget('id');
@@ -20,4 +21,6 @@ Route::group(['middleware'=>['userAuth']],function(){
         return view('welcome');
     })->middleware('adminAuth');
     Route::get('/Add-User',[UsersTbController::class,'addUser'])->middleware('adminAuth');
+    Route::POST('/addUserSubmit',[UsersTbController::class,'addUserSubmit'])->middleware('adminAuth');
+    Route::POST('/addUserSubmitEmailCheck',[UsersTbController::class,'addUserSubmitEmailVerify'])->middleware('adminAuth');
 });

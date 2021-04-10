@@ -10,11 +10,9 @@
 
     <!-- Fontfaces CSS-->
     <link href="{{ asset('Admin_assets/css/font-face.css') }}" rel="stylesheet" media="all">
-    <link href="{{ asset('Admin_assets/vendor/font-awesome-4.7/css/font-awesome.min.css') }}" rel="stylesheet"
-        media="all">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-    <link href="{{ asset('Admin_assets/vendor/mdi-font/css/material-design-iconic-font.min.css') }}" rel="stylesheet"
-        media="all">
+    <link href="{{ asset('Admin_assets/vendor/font-awesome-4.7/css/font-awesome.min.css') }}" rel="stylesheet" media="all">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link href="{{ asset('Admin_assets/vendor/mdi-font/css/material-design-iconic-font.min.css') }}" rel="stylesheet" media="all">
 
     <!-- Bootstrap CSS-->
     <link href="{{ asset('Admin_assets/vendor/bootstrap-4.1/bootstrap.min.css') }}" rel="stylesheet" media="all">
@@ -61,7 +59,7 @@
                                         <div class="content">
                                             <p class="">{{ session('name') }} <span><a href="
                                                         {{ url('/logout') }}"">
-                                                        <i class="zmdi zmdi-power p-2"></i>Logout</a></span></p>
+                                                        <i class=" zmdi zmdi-power p-2"></i>Logout</a></span></p>
                                         </div>
                                         <div class="account-dropdown js-dropdown">
                                             <div class="info clearfix">
@@ -111,6 +109,7 @@
 
     <!-- Main JS-->
     <script src="{{ asset('Admin_assets/js/main.js') }}"></script>
+    <script src="{{ asset('Admin_assets/js/ajax.js') }}"></script>
 
 </body>
 

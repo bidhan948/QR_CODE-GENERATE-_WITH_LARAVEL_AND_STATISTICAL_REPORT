@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Hash;
 
 class UsersTbController extends Controller
 {
+    public function index()
+    {
+        $result['data'] = users_tb::where('role', 0)->get();
+        return view('welcome', $result);
+    }
     public function loginSubmit(loginSubmit $r)
     {
         $email = $r->input('email');
@@ -47,7 +52,7 @@ class UsersTbController extends Controller
         $user->status = 1;
         $user->role = 0;
         $user->save();
-        $r->session()->flash('msg','User Added Successfully');
+        $r->session()->flash('msg', 'User Added Successfully');
         return redirect('/');
     }
     public function addUserSubmitEmailVerify(Request $r)
@@ -55,5 +60,32 @@ class UsersTbController extends Controller
         if ($r->input('_token') != "") {
             return users_tb::Where('email', $r->input('email'))->count();
         }
+    }
+    public function editUser($id)
+    {
+        $result['data'] = users_tb::where('id', $id)->get();
+        return view('Admin.Edit-User', $result);
+    }
+    public function editUserSubmit(Request $r, $id)
+    {
+        $r->validate(
+            [
+                'name' => 'required',
+                'Email' => 'required|unique:users_tbs,email,'.$id,
+                'total_qr' => 'required',
+            ],
+            [
+                'name.required' => 'Please Enter name',
+                'Email.required' => 'Please Enter email',
+                'total_qr.required' => 'Please assign the number of Qr code',
+            ]
+        );
+        $user = users_tb::findOrFail($id);
+        $user->name = $r->input('name');
+        $user->email = $r->input('Email');
+        $user->total_qr = $r->input('total_qr');
+        $user->save();
+        $r->session()->flash('msg','Edited Successfully');
+        return redirect('/');
     }
 }

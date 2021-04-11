@@ -110,16 +110,28 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>100398</td>
-                                        <td>iPhone X 64Gb Grey</td>
-                                        <td class="text-right">$999.00</td>
-                                        <td class="text-right">1</td>
-                                        <td><a href="" class="btn btn-success">Edit <i class="fas fa-edit p-1"></i></a></td>
-                                        <td><a href="" class="btn btn-danger">Delete <i
-                                                    class="fas fa-trash-alt p-1"></i></a></td>
-                                    </tr>
+                                    @php
+                                        $i = 0;
+                                    @endphp
+                                    @foreach ($data as $item)
+                                        <tr>
+                                            <td>{{ ++$i }}</td>
+                                            <td>{{ $item->name }}</td>
+                                            <td>{{ $item->email }}</td>
+                                            <td class="text-center">{{ $item->total_qr }} /
+                                                <?php echo $retVal = $item->total_hit != '' ?
+                                                $item->total_hit : 0; ?></td>
+                                            <td class="text-center">{{$item->created_at}}</td>
+                                            <td><a href="{{url('Edit-User/'.$item->id)}}" class="btn btn-success">Edit <i class="fas fa-edit p-1"></i></a>
+                                            </td>
+                                            <td>
+                                                @if ($item->status == 1)
+                                                    <a href="{{url('Edit-User/0/'.$item->id)}}" class="btn btn-info">Active <i class="fas fa-dot-circle p-1"></i></a></td>
+                                                @else
+                                                    <a href="url('Edit-User/1/'.$item->id)}}" class="btn btn-danger">Deactive <i class="fas fa-dot-circle p-1"></i></a></td>
+                                                @endif
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

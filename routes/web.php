@@ -17,10 +17,10 @@ Route::view('/login','login');
 Route::POST('loginSubmit',[UsersTbController::class,'loginSubmit']);
 
 Route::group(['middleware'=>['userAuth']],function(){
-    Route::get('/', function () {
-        return view('welcome');
-    })->middleware('adminAuth');
+    Route::get('/',[UsersTbController::class,'index'])->middleware('adminAuth');
     Route::get('/Add-User',[UsersTbController::class,'addUser'])->middleware('adminAuth');
     Route::POST('/addUserSubmit',[UsersTbController::class,'addUserSubmit'])->middleware('adminAuth');
     Route::POST('/addUserSubmitEmailCheck',[UsersTbController::class,'addUserSubmitEmailVerify'])->middleware('adminAuth');
+    Route::get('/Edit-User/{id}',[UsersTbController::class,'editUser'])->middleware('adminAuth');
+    Route::POST('/editUserSubmit/{id}',[UsersTbController::class,'editUserSubmit'])->middleware('adminAuth');
 });

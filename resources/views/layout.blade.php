@@ -10,9 +10,11 @@
 
     <!-- Fontfaces CSS-->
     <link href="{{ asset('Admin_assets/css/font-face.css') }}" rel="stylesheet" media="all">
-    <link href="{{ asset('Admin_assets/vendor/font-awesome-4.7/css/font-awesome.min.css') }}" rel="stylesheet" media="all">
+    <link href="{{ asset('Admin_assets/vendor/font-awesome-4.7/css/font-awesome.min.css') }}" rel="stylesheet"
+        media="all">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-    <link href="{{ asset('Admin_assets/vendor/mdi-font/css/material-design-iconic-font.min.css') }}" rel="stylesheet" media="all">
+    <link href="{{ asset('Admin_assets/vendor/mdi-font/css/material-design-iconic-font.min.css') }}" rel="stylesheet"
+        media="all">
 
     <!-- Bootstrap CSS-->
     <link href="{{ asset('Admin_assets/vendor/bootstrap-4.1/bootstrap.min.css') }}" rel="stylesheet" media="all">
@@ -34,10 +36,17 @@
             <div class="menu-sidebar__content js-scrollbar1">
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
-                        <li class="@yield('dashboard') has-sub">
-                            <a class="js-arrow" href="{{ url('/') }}">
-                                <i class="fas fa-user"></i>User</a>
-                        </li>
+                        @if (session('role') == 1)
+                            <li class="@yield('dashboard') has-sub">
+                                <a class="js-arrow" href="{{ url('/') }}">
+                                    <i class="fas fa-user"></i>User</a>
+                            </li>
+                        @else
+                            <li class="@yield('profile') has-sub">
+                                <a class="js-arrow" href="{{ url('/profile') }}">
+                                    <i class="fas fa-qrcode"></i>QR-Report</a>
+                            </li>
+                        @endif
                     </ul>
                 </nav>
             </div>

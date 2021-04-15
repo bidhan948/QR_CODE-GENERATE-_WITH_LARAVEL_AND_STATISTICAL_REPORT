@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\addUserSubmit;
 use App\Http\Requests\loginSubmit;
 use App\Models\users_tb;
+use App\Models\qr_codr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -14,6 +15,12 @@ class UsersTbController extends Controller
     {
         $result['data'] = users_tb::where('role', 0)->get();
         return view('welcome', $result);
+    }
+    public function userIndex()
+    {
+        $id  = session('id');
+        $result['data'] = qr_codr::where('added_by',$id)->get();
+        return view('/profile',$result);
     }
     public function loginSubmit(loginSubmit $r)
     {
@@ -86,6 +93,19 @@ class UsersTbController extends Controller
         $user->total_qr = $r->input('total_qr');
         $user->save();
         $r->session()->flash('msg','Edited Successfully');
+        return redirect('/');
+    }
+    public function switchStatus(Request $r,$status, $id)
+    {
+        $user = users_tb::findOrFail($id);
+        if($status == 0){
+            $user->status = 0;
+            $r->session()->flash('msg','Account Deactivated Succesfully');
+        }else{
+            $user->status = 1;
+            $r->session()->flash('msg','Account activated sucessfully');
+        }
+        $user->save();
         return redirect('/');
     }
 }

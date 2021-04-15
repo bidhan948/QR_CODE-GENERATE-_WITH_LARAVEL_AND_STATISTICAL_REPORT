@@ -2,6 +2,8 @@
 use App\Http\Controllers\QrCodrController;
 use App\Http\Controllers\UsersTbController;
 use App\Http\Controllers\QrTrafficConptroller;
+use App\Http\Controllers\SizeController;
+use App\Http\Controllers\ColorController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/logout',function(){
@@ -23,4 +25,8 @@ Route::group(['middleware'=>['userAuth']],function(){
     Route::POST('/addUserSubmitEmailCheck',[UsersTbController::class,'addUserSubmitEmailVerify'])->middleware('adminAuth');
     Route::get('/Edit-User/{id}',[UsersTbController::class,'editUser'])->middleware('adminAuth');
     Route::POST('/editUserSubmit/{id}',[UsersTbController::class,'editUserSubmit'])->middleware('adminAuth');
+    Route::get('/switchStatus/{status}/{id}',[UsersTbController::class,'switchStatus'])->middleware('adminAuth');
+    Route::get('/Profile',[UsersTbController::class,'userIndex']);
+    // size route
+    Route::get('/Color',[ColorController::class,'index']);
 });

@@ -14,9 +14,11 @@
                         @endif
                         <div class="overview-wrap">
                             <h2 class="title-1">overview</h2>
-                            <a class="au-btn au-btn-icon au-btn--blue text-white font-weight-bold"
-                                href="{{ url('Add-User') }}">
-                                <i class="zmdi zmdi-plus font-weight-bold"></i>add User</a>
+                            @if (session('role') == 1)
+                                <a class="au-btn au-btn-icon au-btn--blue text-white font-weight-bold"
+                                    href="{{ url('Add-User') }}">
+                                    <i class="zmdi zmdi-plus font-weight-bold"></i>add User</a>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -121,16 +123,21 @@
                                             <td class="text-center">{{ $item->total_qr }} /
                                                 <?php echo $retVal = $item->total_hit != '' ?
                                                 $item->total_hit : 0; ?></td>
-                                            <td class="text-center">{{$item->created_at}}</td>
-                                            <td><a href="{{url('Edit-User/'.$item->id)}}" class="btn btn-success">Edit <i class="fas fa-edit p-1"></i></a>
+                                            <td class="text-center">{{ $item->created_at }}</td>
+                                            <td><a href="{{ url('Edit-User/' . $item->id) }}" class="btn btn-success">Edit <i
+                                                        class="fas fa-edit p-1"></i></a>
                                             </td>
                                             <td>
                                                 @if ($item->status == 1)
-                                                    <a href="{{url('Edit-User/0/'.$item->id)}}" class="btn btn-info">Active <i class="fas fa-dot-circle p-1"></i></a></td>
-                                                @else
-                                                    <a href="url('Edit-User/1/'.$item->id)}}" class="btn btn-danger">Deactive <i class="fas fa-dot-circle p-1"></i></a></td>
-                                                @endif
-                                        </tr>
+                                                    <a href="{{ url('switchStatus/0/' . $item->id) }}"
+                                                        class="btn btn-info">Active <i
+                                                            class="fas fa-dot-circle p-1"></i></a>
+                                            </td>
+                                        @else
+                                            <a href="{{ url('switchStatus/1/' . $item->id) }}" class="btn btn-danger">Deactive
+                                                <i class="fas fa-dot-circle p-1"></i></a></td>
+                                    @endif
+                                    </tr>
                                     @endforeach
                                 </tbody>
                             </table>

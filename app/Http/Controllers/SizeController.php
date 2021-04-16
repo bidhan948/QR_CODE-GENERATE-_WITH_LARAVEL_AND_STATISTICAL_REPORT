@@ -2,84 +2,55 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\addSizeSubmit;
 use App\Models\size;
 use Illuminate\Http\Request;
 
 class SizeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        $result['data'] = Size::get();
+        return view('Admin/Size', $result);
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function addSize()
     {
-        //
+        return view('Admin/Add-Size');
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function addSizeSubmit(addSizeSubmit $r)
     {
-        //
+        $Size = new Size;
+        $Size->Size = $r->input('Size');
+        $Size->save();
+        $r->session()->flash('msg', $r->input('Size') . ' Size has Been Added');
+        return redirect('Size');
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\size  $size
-     * @return \Illuminate\Http\Response
-     */
-    public function show(size $size)
+    public function editSize($id)
     {
-        //
+        $result['data'] = Size::where('id', $id)->get();
+        return view('Admin/Edit-Size', $result);
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\size  $size
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(size $size)
+    public function editSizeSubmit(Request $r, $id)
     {
-        //
+        $r->validate(
+            [
+                'size' => 'required|unique:sizes,size,'.$id
+            ],
+            [
+                'size.required' => "Please Enter Unique Size"
+            ]
+        );
+        $Size = Size::findOrFail($id);
+        $Size->size = $r->input('size');
+        $Size->save();
+        session()->flash('msg', 'Size has been Successfully edited');
+        return redirect('Size');
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\size  $size
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, size $size)
+    public function deleteSize($id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\size  $size
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(size $size)
-    {
-        //
+        $Size = Size::findOrFail($id);
+        $Size->delete();
+        session()->flash('msg', 'Size Has been deleted Successfully');
+        return redirect('Size');
     }
 }

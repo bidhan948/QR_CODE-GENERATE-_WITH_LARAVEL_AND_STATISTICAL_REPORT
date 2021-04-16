@@ -45,6 +45,10 @@
                                 <a class="js-arrow" href="{{ url('/Color') }}">
                                     <i class="fas "></i>Color</a>
                             </li>
+                            <li class="@yield('Size') has-sub">
+                                <a class="js-arrow" href="{{ url('/Size') }}">
+                                    <i class="fas "></i>Size</a>
+                            </li>
                         @else
                             <li class="@yield('profile') has-sub">
                                 <a class="js-arrow" href="{{ url('/profile') }}">

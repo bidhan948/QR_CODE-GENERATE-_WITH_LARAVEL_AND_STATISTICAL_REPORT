@@ -27,6 +27,12 @@ Route::group(['middleware'=>['userAuth']],function(){
     Route::POST('/editUserSubmit/{id}',[UsersTbController::class,'editUserSubmit'])->middleware('adminAuth');
     Route::get('/switchStatus/{status}/{id}',[UsersTbController::class,'switchStatus'])->middleware('adminAuth');
     Route::get('/Profile',[UsersTbController::class,'userIndex']);
-    // size route
-    Route::get('/Color',[ColorController::class,'index']);
+    // color route
+    Route::get('/Color',[ColorController::class,'index'])->middleware('adminAuth');
+    Route::get('/Add-Color',[ColorController::class,'addColor'])->middleware('adminAuth');
+    Route::POST('/addColorSubmit',[ColorController::class,'addColorSubmit'])->middleware('adminAuth');
+    Route::get('/deleteColor/{id}',[ColorController::class,'deleteColor'])->middleware('adminAuth');
+    Route::get('/Edit-Color/{id}',[ColorController::class,'editColor'])->middleware('adminAuth');
+    Route::POST('/editColorSubmit/{id}',[ColorController::class,'editColorSubmit'])->middleware('adminAuth');
+
 });

@@ -42,4 +42,7 @@ Route::group(['middleware' => ['userAuth']], function () {
     Route::get('/deleteSize/{id}', [SizeController::class, 'deleteSize'])->middleware('adminAuth');
     Route::get('/Edit-Size/{id}', [SizeController::class, 'editSize'])->middleware('adminAuth');
     Route::POST('/editSizeSubmit/{id}', [SizeController::class, 'editSizeSubmit'])->middleware('adminAuth');
+    // user section
+    Route::get('Add-Qr',[QrCodrController::class,'addQr']);
+    Route::POST('addQrSubmit',[QrCodrController::class,'addQrSubmit']);
 });

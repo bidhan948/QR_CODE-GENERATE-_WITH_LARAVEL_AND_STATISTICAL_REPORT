@@ -7,6 +7,7 @@ use App\Http\Requests\loginSubmit;
 use App\Models\users_tb;
 use App\Models\qr_codr;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class UsersTbController extends Controller
@@ -19,8 +20,15 @@ class UsersTbController extends Controller
     public function userIndex()
     {
         $id  = session('id');
-        $result['data'] = qr_codr::where('added_by',$id)->get();
-        return view('/profile',$result);
+        if (session('role') == 1) {
+            $result['data'] = $users = DB::table('qr_codrs')
+            ->leftJoin('users_tbs', 'users_tbs.id', '=', 'qr_codrs.added_by')
+            ->select('qr_codrs.*', 'users_tbs.name')
+            ->get();
+        } else {
+            $result['data'] = qr_codr::where('added_by', $id)->get();
+        }
+        return view('/profile', $result);
     }
     public function loginSubmit(loginSubmit $r)
     {
@@ -78,7 +86,7 @@ class UsersTbController extends Controller
         $r->validate(
             [
                 'name' => 'required',
-                'Email' => 'required|unique:users_tbs,email,'.$id,
+                'Email' => 'required|unique:users_tbs,email,' . $id,
                 'total_qr' => 'required',
             ],
             [
@@ -92,18 +100,18 @@ class UsersTbController extends Controller
         $user->email = $r->input('Email');
         $user->total_qr = $r->input('total_qr');
         $user->save();
-        $r->session()->flash('msg','Edited Successfully');
+        $r->session()->flash('msg', 'Edited Successfully');
         return redirect('/');
     }
-    public function switchStatus(Request $r,$status, $id)
+    public function switchStatus(Request $r, $status, $id)
     {
         $user = users_tb::findOrFail($id);
-        if($status == 0){
+        if ($status == 0) {
             $user->status = 0;
-            $r->session()->flash('msg','Account Deactivated Succesfully');
-        }else{
+            $r->session()->flash('msg', 'Account Deactivated Succesfully');
+        } else {
             $user->status = 1;
-            $r->session()->flash('msg','Account activated sucessfully');
+            $r->session()->flash('msg', 'Account activated sucessfully');
         }
         $user->save();
         return redirect('/');

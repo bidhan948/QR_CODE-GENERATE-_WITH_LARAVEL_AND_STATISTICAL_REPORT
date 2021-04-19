@@ -47,24 +47,24 @@
                                                 <td>{{ $item->qr_name }} <br> <a href="">Report</a><br>Added by : {{$item->name}}</td>
                                                 <td><a
                                                         href="https://chart.apis.google.com/chart?cht=qr&chs={{$item->size}}&chl={{$item->link}}&chco={{$item->color}}">
-                                                        <img src="https://chart.apis.google.com/chart?cht=qr&chs=400x400&chl=&chco="
+                                                        <img src="https://chart.apis.google.com/chart?cht=qr&chs={{$item->size}}&chl={{$item->link}}&chco={{$item->color}}"
                                                             alt="QR" target="_blank"></a></td>
                                                 <td class="text-center">{{ Str::of($item->link)->limit(20) }}</td>
                                                 <td>{{ $item->size }}</td>
                                                 <td class="text-center">{{ $item->created_at}}
                                                 </td>
-                                                <td><a href="{{ url('Edit-User/' . $item->id) }}"
+                                                <td><a href="{{ url('Edit-Qr/' . $item->id) }}"
                                                         class="btn btn-success">Edit
                                                         <i class="fas fa-edit p-1"></i></a>
                                                 </td>
                                                 <td>
                                                     @if ($item->status == 1)
-                                                        <a href="{{ url('switchStatus/0/' . $item->id) }}"
+                                                        <a href="{{ url('qrswitchStatus/0/' . $item->id) }}"
                                                             class="btn btn-info">Active <i
                                                                 class="fas fa-dot-circle p-1"></i></a>
                                                 </td>
                                             @else
-                                                <a href="{{ url('switchStatus/1/' . $item->id) }}"
+                                                <a href="{{ url('qrswitchStatus/1/' . $item->id) }}"
                                                     class="btn btn-danger">Deactive <i
                                                         class="fas fa-dot-circle p-1"></i></a></td>
                                         @endif

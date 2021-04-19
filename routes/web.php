@@ -45,4 +45,7 @@ Route::group(['middleware' => ['userAuth']], function () {
     // user section
     Route::get('Add-Qr',[QrCodrController::class,'addQr']);
     Route::POST('addQrSubmit',[QrCodrController::class,'addQrSubmit']);
+    Route::get('Edit-Qr/{id}',[QrCodrController::class,'editQr']);
+    Route::get('qrswitchStatus/{status}/{id}',[QrCodrController::class,'switchStatus']);
+    Route::POST('editQrSubmit/{id}',[QrCodrController::class,'editQrSubmit']);
 });

@@ -46,7 +46,7 @@
                                                 <td>{{ ++$i }}</td>
                                                 <td>{{ $item->qr_name }} <br> <a href="">Report</a><br>Added by : {{$item->name}}</td>
                                                 <td><a
-                                                        href="https://chart.apis.google.com/chart?cht=qr&chs={{$item->size}}&chl={{$item->link}}&chco={{$item->color}}">
+                                                        href="{{url('report/'.$item->id)}}">
                                                         <img src="https://chart.apis.google.com/chart?cht=qr&chs={{$item->size}}&chl={{$item->link}}&chco={{$item->color}}"
                                                             alt="QR" target="_blank"></a></td>
                                                 <td class="text-center">{{ Str::of($item->link)->limit(20) }}</td>

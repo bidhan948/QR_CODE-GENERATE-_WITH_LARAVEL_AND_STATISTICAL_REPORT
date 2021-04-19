@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\QrCodrController;
 use App\Http\Controllers\UsersTbController;
-use App\Http\Controllers\QrTrafficConptroller;
+use App\Http\Controllers\QrTrafficController;
 use App\Http\Controllers\SizeController;
 use App\Http\Controllers\ColorController;
 use Illuminate\Support\Facades\Route;
@@ -48,4 +48,6 @@ Route::group(['middleware' => ['userAuth']], function () {
     Route::get('Edit-Qr/{id}',[QrCodrController::class,'editQr']);
     Route::get('qrswitchStatus/{status}/{id}',[QrCodrController::class,'switchStatus']);
     Route::POST('editQrSubmit/{id}',[QrCodrController::class,'editQrSubmit']);
+    // QR code report section
+    Route::get('report/{id}',[QrTrafficController::class,'index']);
 });

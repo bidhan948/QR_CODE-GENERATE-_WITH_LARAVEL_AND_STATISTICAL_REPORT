@@ -7,6 +7,7 @@ use App\Models\qr_traffic;
 use App\Models\qr_codr;
 use App\Models\users_tb;
 use App\Helpers\UserSystemInfoHelper;
+use Illuminate\Support\Facades\DB;
 
 class QrTrafficController extends Controller
 {
@@ -58,7 +59,20 @@ class QrTrafficController extends Controller
     }
     public function report($id)
     {
-        $result = qr_traffic::findOrFail($id)->where('id',$id)->get();
+        $result['data'] = qr_traffic::where('qr_code_id',$id)->get();
+        
+        $result['Devicecount'] = $result['data']->groupBy('device')->map(function ($row){
+            return $row->count();
+        });
+        
+        $result['BrowserCount'] = $result['data']->groupBy('browser')->map(function($row){
+            return $row->count();
+        });
+
+        $result['OsCount'] = $result['data']->groupBy('os')->map(function($row){
+            return $row->count();
+        });
+
         return view('QR-report',$result);
     }
 }

@@ -32,27 +32,33 @@ class QrTrafficController extends Controller
         $getbrowser = UserSystemInfoHelper::get_browsers();
 
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, 'http://ip-api.com/json');
+        curl_setopt($ch, CURLOPT_URL, 'http://ipinfo.io/json?token=6e218414183d6a');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $result = curl_exec($ch);
         $data = json_decode($result, true);
         curl_close($ch);
 
-        if ($data['status'] == 'success') {
+        if ($data['ip'] != '') {
             $qr_traffic = new qr_traffic;
             $qr_traffic->qr_code_id = $id;
             $qr_traffic->device = $getdevice;
             $qr_traffic->browser = $getbrowser;
             $qr_traffic->os = $getos;
             $qr_traffic->country = $data['country'];
-            $qr_traffic->ip_address = $data['query'];
-            $qr_traffic->state = $data['regionName'];
+            $qr_traffic->ip_address = $data['ip'];
+            $qr_traffic->state = $data['region'];
             $qr_traffic->city = $data['city'];
             $qr_traffic->save();
-    
-            $user->total_hit = $user[0]->total_hit + 1; 
-            $user->save();
+            
+            $userEdit = users_tb::findOrFail($qr[0]->added_by);
+            $userEdit->total_hit = $user[0]->total_hit + 1; 
+            $userEdit->save();
             return redirect($qr[0]->link);        
         }
+    }
+    public function report($id)
+    {
+        $result = qr_traffic::findOrFail($id)->where('id',$id)->get();
+        return view('QR-report',$result);
     }
 }

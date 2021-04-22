@@ -44,7 +44,7 @@
                                         @foreach ($data as $item)
                                             <tr>
                                                 <td>{{ ++$i }}</td>
-                                                <td>{{ $item->qr_name }} <br> <a href="">Report</a><br>Added by : {{$item->name}}</td>
+                                                <td>{{ $item->qr_name }} <br> <a href="{{url('QR-Report/' . $item->id)}}">Report</a><br>Added by : {{$item->name}}</td>
                                                 <td><a
                                                         href="{{url('report/'.$item->id)}}">
                                                         <img src="https://chart.apis.google.com/chart?cht=qr&chs={{$item->size}}&chl={{$item->link}}&chco={{$item->color}}"

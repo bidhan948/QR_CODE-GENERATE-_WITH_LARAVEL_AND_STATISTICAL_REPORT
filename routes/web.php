@@ -50,4 +50,7 @@ Route::group(['middleware' => ['userAuth']], function () {
     Route::POST('editQrSubmit/{id}',[QrCodrController::class,'editQrSubmit']);
     // QR code report section
     Route::get('report/{id}',[QrTrafficController::class,'index']);
+    // QRcode Report
+    Route::get('QR-Report/{id}',[QrTrafficController::class,'report']);
+
 });

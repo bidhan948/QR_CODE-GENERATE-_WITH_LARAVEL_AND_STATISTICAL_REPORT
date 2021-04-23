@@ -6,14 +6,21 @@ use App\Http\Requests\addQrSubmit;
 use App\Models\qr_codr;
 use App\Models\size;
 use App\Models\color;
+use App\Models\users_tb;
 
 class QrCodrController extends Controller
 {
     public function addQr()
     {
+        $qr = qr_codr::where('added_by', session('id'))->count();
+        $userQr = users_tb::where('id', session('id'))->get();
         $result['data'] = size::get();
         $result['color'] = color::get();
+        if ($qr == $userQr[0]->total_qr) {
+            session()->flash('msg','QR limit has been exceed');
+        }
         return view('User.Add_Qr', $result);
+
     }
     public function addQrSubmit(addQrSubmit $r)
     {

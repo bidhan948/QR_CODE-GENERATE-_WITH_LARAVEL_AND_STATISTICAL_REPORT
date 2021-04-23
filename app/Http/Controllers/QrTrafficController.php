@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\qr_traffic;
 use App\Models\qr_codr;
 use App\Models\users_tb;
 use App\Helpers\UserSystemInfoHelper;
-use Illuminate\Support\Facades\DB;
 
 class QrTrafficController extends Controller
 {
-    public function index(Request $r,$id)
+    public function index($id)
     {
         $qr = qr_codr::findOrFail($id)->where(
             [

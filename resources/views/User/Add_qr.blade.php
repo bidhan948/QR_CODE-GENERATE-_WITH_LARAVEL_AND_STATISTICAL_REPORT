@@ -68,10 +68,14 @@
                                             data-valmsg-replace="true"></span>
                                     </div>
                                     <div>
+                                        @if (session()->has('msg'))
+                                        <p class="text-danger p-1">{{ session('msg')}}</p>                                      
+                                        @else
                                         <button id="button" type="submit" class="btn btn-lg btn-info btn-block">
                                             <i class="fa fa-lock fa-lg"></i>&nbsp;
                                             <span id="payment-button-amount">Submit</span>
                                         </button>
+                                        @endif
                                     </div>
                                 </form>
                             </div>

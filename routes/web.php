@@ -5,7 +5,6 @@ use App\Http\Controllers\UsersTbController;
 use App\Http\Controllers\QrTrafficController;
 use App\Http\Controllers\SizeController;
 use App\Http\Controllers\ColorController;
-use App\Models\users_tb;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/logout', function () {
@@ -46,16 +45,16 @@ Route::group(['middleware' => ['userAuth']], function () {
     // user section
     Route::get('Add-Qr',[QrCodrController::class,'addQr']);
     Route::POST('addQrSubmit',[QrCodrController::class,'addQrSubmit']);
-    Route::get('Edit-Qr/{id}',[QrCodrController::class,'editQr']);
-    Route::get('qrswitchStatus/{status}/{id}',[QrCodrController::class,'switchStatus']);
+    Route::get('Edit-Qr/{id}',[QrCodrController::class,'editQr'])->middleware('qrAuth');
+    Route::get('qrswitchStatus/{status}/{id}',[QrCodrController::class,'switchStatus'])->middleware('qrAuth');
     Route::POST('editQrSubmit/{id}',[QrCodrController::class,'editQrSubmit']);
     Route::get('User-Detail',[UsersTbController::class,'userDetail']);
-    Route::get('Update-Detail/{id}',[UsersTbController::class,'updateDetail']);
-    Route::POST('editUserDetailSubmit/{id}',[UsersTbController::class,'editUserDetailSubmit']);
+    Route::get('Update-Detail/{id}',[UsersTbController::class,'updateDetail'])->middleware('userPermission');
+    Route::POST('editUserDetailSubmit/{id}',[UsersTbController::class,'editUserDetailSubmit'])->middleware('userPermission');
     // QR code report section
     Route::get('report/{id}',[QrTrafficController::class,'index']);
     // QRcode Report
-    Route::get('QR-Report/{id}',[QrTrafficController::class,'report']);
+    Route::get('QR-Report/{id}',[QrTrafficController::class,'report'])->middleware('qrAuth');
     // QR download 
     Route::get('downloadQr/{id}',[QrCodrController::class,'Download']);
 });

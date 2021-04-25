@@ -122,6 +122,7 @@ class UsersTbController extends Controller
         $result['qr_code'] = qr_codr::where('added_by', session('id'))->count();
         $result['qr_code_used'] = DB::table('qr_codrs')
             ->rightJoin('qr_traffics', 'qr_traffics.qr_code_id', '=', 'qr_codrs.id')
+            ->where('added_by',session('id'))
             ->count();
         return view('User-Detail', $result);
     }

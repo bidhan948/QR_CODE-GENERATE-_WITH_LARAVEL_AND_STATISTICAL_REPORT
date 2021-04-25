@@ -56,5 +56,5 @@ Route::group(['middleware' => ['userAuth']], function () {
     // QRcode Report
     Route::get('QR-Report/{id}',[QrTrafficController::class,'report'])->middleware('qrAuth');
     // QR download 
-    Route::get('downloadQr/{id}',[QrCodrController::class,'Download']);
+    Route::get('downloadQr/{id}',[QrCodrController::class,'Download'])->middleware('qrAuth');
 });

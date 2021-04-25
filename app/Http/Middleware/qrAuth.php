@@ -24,6 +24,9 @@ class qrAuth
                 'id' => $qr_id,
             ]
         )->count();
+        if (session('role') == 1) {
+            return $next($request);
+        }
         if($qr > 0){
             return $next($request);
         }else{

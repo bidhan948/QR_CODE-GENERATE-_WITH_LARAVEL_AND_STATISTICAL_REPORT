@@ -5,6 +5,7 @@ use App\Http\Controllers\UsersTbController;
 use App\Http\Controllers\QrTrafficController;
 use App\Http\Controllers\SizeController;
 use App\Http\Controllers\ColorController;
+use App\Models\users_tb;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/logout', function () {
@@ -48,9 +49,13 @@ Route::group(['middleware' => ['userAuth']], function () {
     Route::get('Edit-Qr/{id}',[QrCodrController::class,'editQr']);
     Route::get('qrswitchStatus/{status}/{id}',[QrCodrController::class,'switchStatus']);
     Route::POST('editQrSubmit/{id}',[QrCodrController::class,'editQrSubmit']);
+    Route::get('User-Detail',[UsersTbController::class,'userDetail']);
+    Route::get('Update-Detail/{id}',[UsersTbController::class,'updateDetail']);
+    Route::POST('editUserDetailSubmit/{id}',[UsersTbController::class,'editUserDetailSubmit']);
     // QR code report section
     Route::get('report/{id}',[QrTrafficController::class,'index']);
     // QRcode Report
     Route::get('QR-Report/{id}',[QrTrafficController::class,'report']);
-
+    // QR download 
+    Route::get('downloadQr/{id}',[QrCodrController::class,'Download']);
 });

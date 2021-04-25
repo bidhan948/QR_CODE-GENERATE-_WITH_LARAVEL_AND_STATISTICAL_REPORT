@@ -66,4 +66,12 @@ class QrCodrController extends Controller
         $qrcode->save();
         return redirect('/Profile');
     }
+    public function Download($id)
+    {
+      $qr = qr_codr::findOrFail($id)->where('id',$id)->get();
+      $link = 'https://chart.apis.google.com/chart?cht=qr&chs='.$qr[0]->size.'&chl='.$qr[0]->link.'&chco='.$qr[0]->color.'';
+      header('Content-type:application/x-file-to-save');
+      header('Content-Disposition: attachment;filename='.time().'.jpg');
+      readfile($link);
+    }
 }

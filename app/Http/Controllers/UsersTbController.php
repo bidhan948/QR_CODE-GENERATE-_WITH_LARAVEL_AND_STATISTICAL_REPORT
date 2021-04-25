@@ -22,9 +22,9 @@ class UsersTbController extends Controller
         $id  = session('id');
         if (session('role') == 1) {
             $result['data'] = $users = DB::table('qr_codrs')
-            ->leftJoin('users_tbs', 'users_tbs.id', '=', 'qr_codrs.added_by')
-            ->select('qr_codrs.*', 'users_tbs.name')
-            ->get();
+                ->leftJoin('users_tbs', 'users_tbs.id', '=', 'qr_codrs.added_by')
+                ->select('qr_codrs.*', 'users_tbs.name')
+                ->get();
         } else {
             $result['data'] = qr_codr::where('added_by', $id)->get();
         }
@@ -115,5 +115,53 @@ class UsersTbController extends Controller
         }
         $user->save();
         return redirect('/');
+    }
+    public function userDetail()
+    {
+        $result['data'] = users_tb::where('id', session('id'))->get();
+        $result['qr_code'] = qr_codr::where('added_by', session('id'))->count();
+        $result['qr_code_used'] = DB::table('qr_codrs')
+            ->rightJoin('qr_traffics', 'qr_traffics.qr_code_id', '=', 'qr_codrs.id')
+            ->count();
+        return view('User-Detail', $result);
+    }
+    public function updateDetail($id)
+    {
+        $result['data'] = users_tb::findOrFail($id)->where('id', $id)->get();
+        return view('User.Edit-User', $result);
+    }
+    public function editUserDetailSubmit(Request $r, $id)
+    {
+        $r->validate([
+            'name' => 'required'
+        ], [
+            'name.required' => 'Please Enter the name'
+        ]);
+        $user = users_tb::findOrFail($id);
+        $password = users_tb::findOrFail($id)->where('id',$id)->get();
+        $user->name = $r->input('name');
+
+        if ($r->input('o_password') != '') {
+            $r->validate([
+                'n_password' => 'required',
+                'c_password' => 'required',
+            ], [
+                'n_password.required' => 'Please Enter the New Password',
+                'c_password.required' => 'Please Confrim your Password',
+            ]);
+            // checking password
+            if (Hash::check($r->input('o_password'), $password[0]->password)) {
+                if ($r->input('n_password') == $r->input('c_password')) {
+                    $user->password = Hash::make($r->input('n_password'));
+                    session()->flash('msg', 'Password Changed Successfully');
+                } else {
+                    session()->flash('msg', 'Password didnot match');
+                }
+            } else {
+                session()->flash('msg', 'Old Password didnot match');
+            }
+        }
+        $user->save();
+        return redirect('User-Detail');
     }
 }
